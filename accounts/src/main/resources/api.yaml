@@ -1,0 +1,20 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: Valuable description
+  version: 0.1.9
+servers:
+  - url: https://example.org/
+    description: Optional server description, e.g. Main (production) server
+paths:
+
+components:
+  schemas:
+    Currency:
+      type: string
+      enum:
+        - "RUB"
+        - "CNY"
+        - "EUR"
+        - "USD"
+        - "GBP"

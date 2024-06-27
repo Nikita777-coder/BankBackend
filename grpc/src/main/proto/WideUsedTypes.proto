@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package net.devh.boot.grpc.example;
+
+message BDecimal {
+  optional int32 scale = 1;
+
+  // required
+  optional string unscaled_value= 2;
+}
+
+enum Currency {
+  FOO_UNSPECIFIED = 0;
+  RUB = 1;
+  CNY = 2;
+  EUR = 3;
+  USD = 4;
+  GBP = 5;
+}

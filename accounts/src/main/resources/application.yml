@@ -1,0 +1,66 @@
+services-configs:
+  customer-service:
+    path:
+      base-url: ${CONVERTER_URL:localhost:8080}
+  keycloak:
+    client-id: ${CLIENT_ID:1}
+    client-secret: ${CLIENT_SECRET:some_secret}
+    url: ${KEYCLOAK_URL:http://localhost:8080}
+    realm: ${KEYCLOAK_REALM:realm}
+  oauth:
+    grand-type: "client_credentials"
+  web-client:
+    time-response: 8
+  web-socket:
+    change-balance-account-destination: /topic/accounts
+
+grpc:
+  client:
+    converterService:
+      address: ${CONVERTER_URL:localhost:9090}
+      negotiation-type: plaintext
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tinkoff_bank}
+    username: ${DB_USER:tinkoff}
+    password: ${DB_PASSWORD:tinkoff}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    web: info
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+    ratelimiters:
+      enabled: true
+#  endpoints:
+#    web:
+#      exposure:
+#        include: *
+  endpoint:
+    health:
+      show-details: always
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 60
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        minimumNumberOfCalls: 10
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+    instances:
+      convert-service:
+        baseConfig: default

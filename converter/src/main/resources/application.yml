@@ -1,0 +1,50 @@
+logging:
+  level:
+    web: debug
+
+#service-configs:
+#  rates-service:
+#    path: http://rates:8080
+#    rounding-mode: HALF_EVEN
+#spring:
+#  main:
+#    allow-bean-definition-overriding: true
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: hse_converter #${CLIENT_ID}
+#            client-secret: ZLM7AmkwCGsVknmqvbRSJYllwJi4zcGf #${CLIENT_SECRET}
+#            provider: "keycloak"
+#            authorization-grant-type: "client_credentials"
+#            scope: "openid"
+#        provider:
+#          keycloak:
+#            token-uri: http://keycloak-keycloakx-http/realms/hse/protocol/openid-connect/token
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://keycloak-keycloakx-http/realms/hse/protocol/openid-connect/certs
+
+service-configs:
+  rates-service:
+    path:
+      base-url: ${RATES_URL:http://localhost:8080}
+      public-url-path: /rates
+    rounding-mode: HALF_EVEN
+  keycloak:
+    client-id: ${CLIENT_ID:1}
+    client-secret: ${CLIENT_SECRET:some_secret}
+    url: ${KEYCLOAK_URL:http://localhost:8080}
+    realm: ${KEYCLOAK_REALM:realm}
+  oauth:
+    grand-type: "client_credentials"
+  web-client:
+    time-response: 8
+
+web-retry:
+  max-attempts: 3
+  backoff:
+    min-delay: 50
+    multiplier: 2
+    max-delay: 150

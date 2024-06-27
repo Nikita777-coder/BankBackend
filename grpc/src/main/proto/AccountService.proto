@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package net.devh.boot.grpc.example;
+
+import "WideUsedTypes.proto";
+
+message AccountBalanceState {
+  // required
+  optional int32 accountNumber = 1;
+
+  // required
+  optional Currency currency = 2;
+
+  // required
+  optional BDecimal balance = 3;
+}

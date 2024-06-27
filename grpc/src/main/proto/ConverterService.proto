@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package net.devh.boot.grpc.example;
+
+import "WideUsedTypes.proto";
+
+service ConverterService {
+  rpc Convert(ConvertRequest) returns (ConvertResponse);
+}
+
+message ConvertRequest {
+  // required
+  optional string from = 1;
+
+  // required
+  optional string to = 2;
+
+  // required
+  optional BDecimal amount = 3;
+}
+
+message ConvertResponse {
+  // required
+  optional Currency currency = 1;
+
+  // required
+  optional BDecimal amount = 2;
+}
